@@ -1,23 +1,27 @@
 ---
-- name: check iptables version
-  shell: iptables --version
+- name: Check iptables version
+  ansible.builtin.command: iptables --version
   register: iptables_version
-  ignore_errors: yes
+  changed_when: false
 
-- block:  
-    - alternatives:
+- name: Convert to iptables-legacy
+  when: '"nf_tables" in iptables_version.stdout'
+  block:
+    - name: Ensure iptables alternative
+      ansible.builtin.alternatives:
         name: iptables
         path: /usr/sbin/iptables-legacy
 
-    - alternatives:
+    - name: Ensure ip6tables alternative
+      ansible.builtin.alternatives:
         name: ip6tables
         path: /usr/sbin/ip6tables-legacy
 
-    - reboot:
-        msg: "Reboot initiated by Ansible for iptables-legacy"
+    - name: Initiate reboot
+      ansible.builtin.reboot:
+        msg: Reboot initiated by Ansible for iptables-legacy
         connect_timeout: 5
         reboot_timeout: 300
         pre_reboot_delay: 0
         post_reboot_delay: 30
         test_command: uptime
-  when: '"nf_tables" in iptables_version.stdout'

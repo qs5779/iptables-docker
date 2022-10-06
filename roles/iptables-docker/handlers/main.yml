@@ -1,6 +1,6 @@
 ---
-- name: reload iptables-docker
-  service:
+- name: Reload iptables-docker
+  ansible.builtin.service:
     name: iptables-docker
     state: restarted
-    enabled: yes
+    enabled: true

@@ -1,15 +1,14 @@
 ---
-
 - name: Disable firewall services
-  service: 
-    name: "{{ item }}" 
-    state: stopped 
-    enabled: no
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: stopped
+    enabled: false
   with_items: "{{ firewall_services }}"
-  ignore_errors: yes
+  when: item in services
 
-- name: render iptables-docker.sh
-  template:
+- name: Render iptables-docker.sh
+  ansible.builtin.template:
     src: iptables-docker.sh.j2
     dest: /usr/local/sbin/iptables-docker.sh
     owner: root
@@ -18,8 +17,8 @@
   notify:
     - reload iptables-docker
 
-- name: copy awk.firewall
-  copy:
+- name: Copy awk.firewall
+  ansible.builtin.copy:
     src: awk.firewall
     dest: /usr/local/sbin/awk.firewall
     owner: root
@@ -28,20 +27,20 @@
   notify:
     - reload iptables-docker
 
-- name: copy iptables-docker.service
-  copy:
+- name: Copy iptables-docker.service
+  ansible.builtin.copy:
     src: iptables-docker.service
     dest: /etc/systemd/system/iptables-docker.service
     owner: root
     group: root
     mode: 0600
 
-- name: reload systemd
-  systemd:
-    daemon_reload: yes
+- name: Reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
 
-- name: enable iptables-docker
-  service:
+- name: Enable iptables-docker
+  ansible.builtin.service:
     name: iptables-docker
-    enabled: yes
+    enabled: true
     state: started
