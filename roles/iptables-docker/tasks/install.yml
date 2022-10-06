@@ -15,7 +15,7 @@
     group: root
     mode: 0700
   notify:
-    - reload iptables-docker
+    - Reload iptables-docker
 
 - name: Copy awk.firewall
   ansible.builtin.copy:
@@ -25,7 +25,7 @@
     group: root
     mode: 0600
   notify:
-    - reload iptables-docker
+    - Reload iptables-docker
 
 - name: Copy iptables-docker.service
   ansible.builtin.copy:

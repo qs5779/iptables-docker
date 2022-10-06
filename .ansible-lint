@@ -1,0 +1,10 @@
+---
+write_list:
+  - name[casing]
+  - fqcn[action-core] # Use FQCN for builtin actions.
+  # - yaml[comments]  # Violations reported by yamllint.
+  # - yaml[hyphens]  # Violations reported by yamllint.
+  - yaml[indentation] # Violations reported by yamllint.
+  - yaml[new-line-at-end-of-file] # Violations reported by yamllint.
+warn_list:
+  - "106" # Role name {} does not match ``^[a-z][a-z0-9_]+$`` pattern
