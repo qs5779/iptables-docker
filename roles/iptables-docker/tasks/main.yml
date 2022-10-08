@@ -8,6 +8,16 @@
       tags: iptables-legacy,legacy
   tags: iptables-legacy,legacy
 
+# Not all Debian flavors install gawk by default
+# I found several of my servers that had mawk, but
+# when you install gawk on Debian it manipulates
+# update-alternatives to use gawk as awk, I have
+# made a TODO item on my list to harden this check
+- name: Ensure gawk pacakge is installed
+  ansible.builtin.package:
+    name: gawk
+    state: present
+
 - name: Include install tasks
   ansible.builtin.include_tasks:
     file: install.yml
