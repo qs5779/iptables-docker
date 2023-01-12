@@ -1,0 +1,11 @@
+---
+iptables_allow_rules:
+  - desc: Allow port 2666 tcp metaorg LAN for ssh-alt
+    proto: tcp
+    port: 2666
+    from: 192.168.66.0/24
+  - desc: Allow port 2049 tcp metaorg LAN for nfs server
+    proto: tcp
+    port: 2049
+    from: 192.168.66.0/24
+...
