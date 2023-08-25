@@ -13,7 +13,7 @@
     dest: /usr/local/sbin/iptables-docker.sh
     owner: root
     group: root
-    mode: 0700
+    mode: "0700"
   notify:
     - Reload iptables-docker
 
@@ -23,7 +23,7 @@
     dest: /usr/local/sbin/awk.firewall
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
   notify:
     - Reload iptables-docker
 
@@ -33,7 +33,7 @@
     dest: /etc/systemd/system/iptables-docker.service
     owner: root
     group: root
-    mode: 0600
+    mode: "0600"
 
 - name: Reload systemd
   ansible.builtin.systemd:
